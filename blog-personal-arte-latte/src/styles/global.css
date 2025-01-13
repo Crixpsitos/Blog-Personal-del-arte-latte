@@ -1,0 +1,57 @@
+:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  background-color: #e6d5c3;
+  color: #6f4e37;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.dark {
+  background-color: #483434;
+  color: #e6d5c3;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #D2B48C;
+}
+
+.dark ::-webkit-scrollbar-track {
+  background: #483434;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8b4513;
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #d2b48c;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6f4e37;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #e6d5c3;
+}
+
+/* Estilos cuando se hace scroll */
+#navbar.scrolled {
+  background-color: rgba(210, 180, 140, 0.9);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

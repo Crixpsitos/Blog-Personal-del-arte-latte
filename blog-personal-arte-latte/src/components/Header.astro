@@ -1,0 +1,129 @@
+---
+import { cn } from "../lib/tailwind-utils";
+import coffeLogo from "../assets/images/coffeLogo.png";
+import { Palette } from 'lucide-astro';
+import Hamburger from './Hamburger.astro';
+import ThemeIcon from './ThemeIcon.astro';
+import Navigation from './Navigation.astro';
+
+---
+
+<header>
+  <nav
+    id="navbar"
+    class={cn(
+      "fixed w-full z-50 transition-all duration-300",
+      "bg-[#D2B48C] dark:bg-[#2C1810] border-b border-[#8B4513]/20 dark:border-[#E6D5C3]/10"
+    )}
+  >
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <div class="flex items-center space-x-2 group">
+          <div class="relative">
+            <div
+              class="p-2 rounded-full bg-[#E6D5C3] dark:bg-[#483434] group-hover:bg-white/90 dark:group-hover:bg-[#8B4513]/80 transition-colors"
+            >
+              <img width="80" height="80" src={coffeLogo.src} alt="inicio" class="h-8 w-8 text-[#6F4E37] dark:text-[#E6D5C3] transition-transform group-hover:scale-110" />
+            </div>
+            <Palette class="h-4 w-4 absolute -top-1 -right-1 text-[#8B4513] dark:text-[#D2B48C] animate-pulse" />
+          </div>
+          <div class="flex flex-col">
+            <span class="text-xl font-semibold text-[#6F4E37] dark:text-[#E6D5C3]">Café Arte</span>
+            <span class="text-xs text-[#8B4513] dark:text-[#D2B48C] font-light italic">Latte Art & Design</span>
+          </div>
+        </div>
+
+        <div class="hidden md:block">
+          <Navigation />
+        </div>
+
+        <div class="hidden md:flex items-center space-x-2">
+          <ThemeIcon />
+          <button
+            id="languageToggle"
+            class="ml-2 text-[#6F4E37] dark:text-[#E6D5C3] hover:bg-[#E6D5C3]/50 dark:hover:bg-[#483434]/50
+                   rounded-full font-medium tracking-wide transition-colors duration-200 px-3 py-2"
+          >
+            ES
+          </button>
+        </div>
+
+        <div class="md:hidden">
+          <Hamburger />
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobileMenu" class="md:hidden absolute w-full transition-all duration-300 ease-in-out opacity-0 -translate-y-4 pointer-events-none">
+      <div class="px-2 pt-2 pb-3 space-y-1 bg-[#D2B48C] dark:bg-[#2C1810] shadow-lg">
+        <Navigation />
+        <div class="flex items-center justify-between px-3 py-2">
+          <ThemeIcon />
+          <button
+            id="mobileLanguageToggle"
+            class="text-[#6F4E37] dark:text-[#E6D5C3] hover:bg-[#E6D5C3]/50 dark:hover:bg-[#483434]/50 rounded-full px-3 py-2"
+          >
+            ES
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const throttle = (callback: Function, limit: number) => {
+    let waiting = false;
+    return function (...args: any[]) {
+      if (!waiting) {
+        callback.apply(this, args);
+        waiting = true;
+        setTimeout(() => (waiting = false), limit);
+      }
+    };
+  };
+
+  document.addEventListener("DOMContentLoaded", () => {
+    const navbar = document.querySelector("#navbar");
+    const languageToggle = document.querySelector("#languageToggle");
+    const mobileLanguageToggle = document.querySelector("#mobileLanguageToggle");
+
+    let isSpanish = true;
+
+    const handleScroll = throttle(() => {
+      const isScrolled = window.scrollY > 20;
+
+      if (isScrolled) {
+        navbar?.classList.add("scrolled", "bg-[#D2B48C]/90", "dark:bg-[#2C1810]/90", "shadow-lg", "backdrop-blur-sm");
+        navbar?.classList.remove("bg-[#D2B48C]", "dark:bg-[#2C1810]", "border-b", "border-[#8B4513]/20", "dark:border-[#E6D5C3]/10");
+      } else {
+        navbar?.classList.remove("scrolled", "bg-[#D2B48C]/90", "dark:bg-[#2C1810]/90", "shadow-lg", "backdrop-blur-sm");
+        navbar?.classList.add("bg-[#D2B48C]", "dark:bg-[#2C1810]", "border-b", "border-[#8B4513]/20", "dark:border-[#E6D5C3]/10");
+      }
+    }, 100);
+
+    const toggleLanguage = () => {
+      isSpanish = !isSpanish;
+      updateLanguageButton();
+    };
+
+    const updateLanguageButton = () => {
+      const text = isSpanish ? "ES" : "FR";
+      languageToggle!.textContent = text;
+      mobileLanguageToggle!.textContent = text;
+    };
+
+    handleScroll();
+    document.addEventListener("scroll", handleScroll);
+    languageToggle?.addEventListener("click", toggleLanguage);
+    mobileLanguageToggle?.addEventListener("click", toggleLanguage);
+
+    document.addEventListener("astro:after-swap", () => {
+      const newNavbar = document.querySelector("#navbar") || navbar;
+      handleScroll();
+      document.removeEventListener("scroll", handleScroll);
+      document.addEventListener("scroll", handleScroll);
+    });
+  });
+</script>

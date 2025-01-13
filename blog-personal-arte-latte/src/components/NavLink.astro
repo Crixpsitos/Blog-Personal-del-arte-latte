@@ -1,0 +1,31 @@
+---
+import type { LucideIcon } from 'lucide-astro';
+
+interface Props {
+  href: string;
+  icon: LucideIcon;
+  name: string;
+}
+
+const { href, icon: Icon, name } = Astro.props;
+const isActive = href === Astro.url.pathname;
+
+console.log(Astro.url.pathname)
+---
+
+<a
+  href={href}
+  class:list={[
+    "flex items-center text-[#6F4E37] dark:text-[#E6D5C3] hover:text-[#8B4513] dark:hover:text-[#D2B48C] px-4 py-2 rounded-full text-sm font-medium relative group transition-all duration-200 hover:bg-[#E6D5C3]/50 dark:hover:bg-[#483434]/50",
+    { active: isActive }
+  ]}
+>
+  <Icon class="w-4 h-4 mr-2" />
+  <span>{name}</span>
+</a>
+
+<style>
+  a.active {
+    @apply text-[#8B4513] bg-black;
+  }
+</style>

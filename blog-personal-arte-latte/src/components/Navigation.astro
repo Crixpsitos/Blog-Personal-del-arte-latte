@@ -1,0 +1,17 @@
+---
+import { Home, Coffee, Image, Phone } from "lucide-astro";
+import NavLink from "./NavLink.astro";
+
+const navItems = [
+  { name: "Inicio", href: "/", icon: Home },
+  { name: "Blog", href: "/blog", icon: Coffee },
+  { name: "Galería", href: "/galeria", icon: Image },
+  { name: "Sobre mí", href: "/sobre-mi", icon: Phone },
+];
+---
+
+<div class="flex flex-col md:flex-row md:items-center md:space-x-1">
+  {navItems.map((item) => (
+    <NavLink href={item.href} icon={item.icon} name={item.name} />
+  ))}
+</div>
