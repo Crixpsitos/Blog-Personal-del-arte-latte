@@ -50,8 +50,3 @@ html {
   background: #e6d5c3;
 }
 
-/* Estilos cuando se hace scroll */
-#navbar.scrolled {
-  background-color: rgba(210, 180, 140, 0.9);
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}

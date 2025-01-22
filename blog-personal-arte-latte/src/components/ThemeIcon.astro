@@ -16,6 +16,12 @@ import { Sun, Moon } from "lucide-astro";
 </button>
 
 <script>
+  // Extend the Window interface to include toggleTheme
+  declare global {
+    interface Window {
+      toggleTheme: () => void;
+    }
+  }
   // Detectar el tema inicial
   document.addEventListener("astro:page-load", () => {
     const savedTheme = localStorage.getItem("theme");

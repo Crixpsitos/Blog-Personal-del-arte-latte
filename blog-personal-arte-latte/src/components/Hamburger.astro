@@ -1,5 +1,5 @@
 ---
-import { Menu, X } from 'lucide-astro';
+import { Menu, X } from "lucide-astro";
 ---
 
 <button
@@ -12,26 +12,39 @@ import { Menu, X } from 'lucide-astro';
 </button>
 
 <script>
-  const mobileMenuToggle = document.querySelector("#mobileMenuToggle");
-  const mobileMenu = document.querySelector("#mobileMenu");
-  const menuIcon = document.querySelector("#menuIcon");
-  const closeIcon = document.querySelector("#closeIcon");
-  let isMenuOpen = false;
+  const mainToggleMenu = () => {
+    const mobileMenuToggle = document.querySelector("#mobileMenuToggle");
+    const mobileMenu = document.querySelector("#mobileMenu");
+    const menuIcon = document.querySelector("#menuIcon");
+    const closeIcon = document.querySelector("#closeIcon");
+    let isMenuOpen = false;
 
-  const toggleMenu = () => {
-    isMenuOpen = !isMenuOpen;
-    if (isMenuOpen) {
-      mobileMenu?.classList.remove("opacity-0", "-translate-y-4", "pointer-events-none");
-      mobileMenu?.classList.add("opacity-100", "translate-y-0");
-      menuIcon?.classList.add("hidden");
-      closeIcon?.classList.remove("hidden");
-    } else {
-      mobileMenu?.classList.add("opacity-0", "-translate-y-4", "pointer-events-none");
-      mobileMenu?.classList.remove("opacity-100", "translate-y-0");
-      menuIcon?.classList.remove("hidden");
-      closeIcon?.classList.add("hidden");
-    }
+    const toggleMenu = () => {
+      isMenuOpen = !isMenuOpen;
+      if (isMenuOpen) {
+        mobileMenu?.classList.remove(
+          "opacity-0",
+          "-translate-y-4",
+          "pointer-events-none",
+        );
+        mobileMenu?.classList.add("opacity-100", "translate-y-0");
+        menuIcon?.classList.add("hidden");
+        closeIcon?.classList.remove("hidden");
+      } else {
+        mobileMenu?.classList.add(
+          "opacity-0",
+          "-translate-y-4",
+          "pointer-events-none",
+        );
+        mobileMenu?.classList.remove("opacity-100", "translate-y-0");
+        menuIcon?.classList.remove("hidden");
+        closeIcon?.classList.add("hidden");
+      }
+    };
+
+    mobileMenuToggle?.addEventListener("click", toggleMenu);
   };
 
-  mobileMenuToggle?.addEventListener("click", toggleMenu);
+  document.addEventListener("DOMContentLoaded", mainToggleMenu);
+  document.addEventListener("astro:after-swap", mainToggleMenu)
 </script>
